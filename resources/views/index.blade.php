@@ -7,20 +7,21 @@
 @section('content')
 <h2 class="mb-4">Dashboard | Web App Pencatatan Buku</h2>
 <div class="mb-3">
-    <a name="tambah" id="tambah" class="btn btn-primary" href="{{ url('modal.tambah') }}" role="button" data-bs-target="#tambah_buku" data-bs-toggle="modal">&#43; Tambah Data</a>
+    <a name="tambah" id="tambah" class="btn btn-primary" href="{{ url('modal.tambah') }}" role="button" data-bs-target="#tambah_buku" data-bs-toggle="modal">&#43;  Tambah Data</a>
     <a name="reset" id="res" class="btn btn-warning" href="{{ url('/') }}" role="button">&#8634; Refresh</a>
     <!-- <a name="logout" id="out" class="btn btn-danger" href="" role="button">
         <i class="fa fa-sign-out"></i>
     </a> -->
 
     <!-- Search Box -->
-    <form action="{{ url()->current() }}" method="GET" id="cari">
+<!--    <form action="{{ url('search') }}" method="GET" id="cari">
         @csrf
-        <div class="input-group">
-            <input type="search" name="search" value="{{ request('keyword') }}" class="form-control" placeholder="Search by Judul">
+        <div class="input-group mb-3">
+            <input type="search" name="search" value="{{ request('search') }}" class="form-control" placeholder="Search by Judul">
             <button class="btn btn-primary" type="submit">&#128269;</button>
         </div>
     </form>
+-->
 
 </div>
 

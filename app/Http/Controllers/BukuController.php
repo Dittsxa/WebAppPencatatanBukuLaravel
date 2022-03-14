@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Buku;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Bus;
 
 class BukuController extends Controller
 {
@@ -18,12 +19,6 @@ class BukuController extends Controller
         $no = Buku::paginate(15);
         $pagination = 5;
         $bukus = Buku::all();
-        $buku = Buku::when($request->keyword, function ($query) use ($request) {
-            $query
-            ->where('judul', 'like', "%{$request->keyword}%");
-        })->orderBy('judul')->paginate($pagination);
-    
-        $buku->appends($request->only('keyword'));
     
         return view('index', ['bukus' => $bukus, 'judul' => 'buku'])->with('i', ($request->input('page', 1) - 1) * $pagination);;
     }
@@ -126,14 +121,18 @@ class BukuController extends Controller
     }
 
     public function search(Request $request){
-        $keywords = $request->search();
-        $buku = Buku::where('judul', 'like', '%'. $keywords . '%')->orderBy('judul', 'desc')->paginate(5);
-        return view('index', compact('buku'))->with('i', (request()->input('page', 1) - 1) * 5);
+        $pagination = 5;
+        $bukus = Buku::all();
+        $buku = Buku::latest();
+        if(request('search')){
+            $buku->where('judul', 'like', '&' . request('search') . '%');
+        }
+        return view('index', ['bukus' => $bukus, 'judul' => 'buku']);
     }
 
     public function showData($id)
     {
         $buku = Buku::findOrFail($id);
-        return $buku;
+        return $buku; 
     }
 }
